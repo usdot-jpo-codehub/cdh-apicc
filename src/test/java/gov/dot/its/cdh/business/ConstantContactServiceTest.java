@@ -208,6 +208,47 @@ public class ConstantContactServiceTest {
 		assertEquals(apiResponse.getResult().getEmail(), TEST_EMAIL);
 	}
 
+	@Test
+	public void testCreateContactContactRequestDaoCreateContactReturnsNull() throws IOException {
+		MockHttpServletRequest request = new MockHttpServletRequest();
+		CCContactRequest ccContactRequest = new CCContactRequest();
+		ccContactRequest.setListId(TEST_LISTID);
+		ccContactRequest.setEmail(TEST_EMAIL);
+
+		List<Contact> contacts = new ArrayList<>();
+
+		when(constantContactDao.getContactsByEmail(any(String.class))).thenReturn(contacts);
+		when(constantContactDao.createContact(any(CCContactRequest.class))).thenReturn(null);
+
+		ApiResponse<CCContactResponse> apiResponse  = constantContactService.createContact(request, ccContactRequest);
+
+		assertEquals(HttpStatus.BAD_REQUEST.value(), apiResponse.getCode());
+		assertTrue(apiResponse.getResult() == null);
+		assertTrue(!apiResponse.getErrors().isEmpty());
+	}
+
+	@Test
+	public void testCreateContactContactRequestDaoUpdateContactReturnsNull() throws IOException {
+		String testListIdNew = "24680";
+		MockHttpServletRequest request = new MockHttpServletRequest();
+		CCContactRequest ccContactRequest = new CCContactRequest();
+		ccContactRequest.setListId(testListIdNew);
+		ccContactRequest.setEmail(TEST_EMAIL);
+
+		Contact contact = this.prepareTestContact(TEST_ID, TEST_EMAIL, TEST_LISTID);
+		List<Contact> contacts = new ArrayList<>();
+		contacts.add(contact);
+
+		when(constantContactDao.getContactsByEmail(any(String.class))).thenReturn(contacts);
+		when(constantContactDao.registerContactToList(any(CCContactRequest.class),any(Contact.class))).thenReturn(null);
+
+		ApiResponse<CCContactResponse> apiResponse  = constantContactService.createContact(request, ccContactRequest);
+
+		assertEquals(HttpStatus.BAD_REQUEST.value(), apiResponse.getCode());
+		assertTrue(apiResponse.getResult() == null);
+		assertTrue(!apiResponse.getErrors().isEmpty());
+	}
+
 	private Contact prepareTestContact(String id, String email, String listId) {
 		List<ContactListMetaData> lists = new ArrayList<>();
 		ContactListMetaData lst = new ContactListMetaData();

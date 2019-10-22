@@ -20,7 +20,7 @@ public class ConstantContactController {
 	@Autowired
 	ConstantContactService constantContactService;
 
-	@PostMapping(value= {"/api/v1/contacts"}, consumes = {"application/json"}, produces= {"application/json"})
+	@PostMapping(value= {"/v1/contacts"}, consumes = {"application/json"}, produces= {"application/json"})
 	public ResponseEntity<ApiResponse<CCContactResponse>> createContact(HttpServletRequest request, @RequestBody CCContactRequest ccContactRequest) {
 
 		ApiResponse<CCContactResponse> apiResponse = constantContactService.createContact(request, ccContactRequest);

@@ -69,7 +69,7 @@ public class ConstantContactControllerTest {
 		when(constantContactService.createContact(any(HttpServletRequest.class), any(CCContactRequest.class))).thenReturn(apiResponse);
 
 		ResultActions resultActions = this.mvc.perform(
-				post("/api/v1/contacts")
+				post("/v1/contacts")
 				.contentType(MediaType.APPLICATION_JSON)
 				.content(requestJson)
 				)
