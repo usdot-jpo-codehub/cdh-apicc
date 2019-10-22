@@ -11,7 +11,7 @@ public class CDHUtilsImpl implements CDHUtils {
 		String msg = "[%s] %s : %s";
 		
 		Date date = new Date();
-		SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss'Z'");
+		SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSS'Z'");
 		dateFormat.setTimeZone(TimeZone.getTimeZone("UTC"));
 
 		System.out.println(String.format(msg, dateFormat.format(date), isError? "Error": "", message));
