@@ -75,7 +75,15 @@ It is important to setup the environment variables before to execute the applica
 
 1. Install and open Spring Tool Suit
 2. Configure the required enviroment variables
-3. Debug/Run as Spring Boot application, after this step the application will be running and ready to receive request.
+3. Register the Constant Contact libraries in Maven local repository by running the following commands.
+```bash
+mvn install:install-file -Dfile=./libs/java-sdk-5.2.3.jar -DgroupId=com.constantcontact -DartifactId=java-sdk -Dversion=5.2.3 -Dpackaging=jar
+```
+```bash
+mvn install:install-file -Dfile=./libs/java-components-5.2.3.jar -DgroupId=com.constantcontact -DartifactId=java-components -Dversion=5.2.3 -Dpackaging=jar
+```
+
+4. Debug/Run as Spring Boot application, after this step the application will be running and ready to receive request.
 
 ## Docker Support
 A [Docker](https://www.docker.com/) image can be build with the next command line.
