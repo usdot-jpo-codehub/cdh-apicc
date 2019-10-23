@@ -15,9 +15,11 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.restdocs.AutoConfigureRestDocs;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
+import org.springframework.core.env.Environment;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.mock.web.MockHttpServletRequest;
+import org.springframework.restdocs.operation.preprocess.Preprocessors;
 import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.MvcResult;
@@ -33,7 +35,7 @@ import gov.dot.its.cdh.model.CCContactResponse;
 
 @RunWith(SpringRunner.class)
 @WebMvcTest(ConstantContactController.class)
-@AutoConfigureRestDocs(outputDir = "target/generated-snippets")
+@AutoConfigureRestDocs(outputDir = "target/generated-snippets", uriHost="example.com", uriPort=3003, uriScheme="http")
 public class ConstantContactControllerTest {
 
 	private static final String TEST_ID = "1234567890";
@@ -45,6 +47,9 @@ public class ConstantContactControllerTest {
 
 	@Autowired
 	private ObjectMapper objectMapper;
+
+	@Autowired
+	private Environment env;
 
 	@MockBean
 	private ConstantContactService constantContactService;
@@ -69,12 +74,22 @@ public class ConstantContactControllerTest {
 		when(constantContactService.createContact(any(HttpServletRequest.class), any(CCContactRequest.class))).thenReturn(apiResponse);
 
 		ResultActions resultActions = this.mvc.perform(
-				post("/v1/contacts")
+				post(String.format("%s/v1/contacts",env.getProperty("server.servlet.context-path")))
+				.contextPath(String.format("%s", env.getProperty("server.servlet.context-path")))
 				.contentType(MediaType.APPLICATION_JSON)
 				.content(requestJson)
 				)
 			.andExpect(status().isOk())
-			.andDo(document("api/v1/contact"));
+			.andDo(document("api/v1/contact",
+					Preprocessors.preprocessRequest(
+							Preprocessors.prettyPrint(),
+							Preprocessors.removeHeaders("Host", "Content-Length")
+							),
+					Preprocessors.preprocessResponse(
+							Preprocessors.prettyPrint(),
+							Preprocessors.removeHeaders("Host", "Content-Length")
+							)
+					));
 
 		MvcResult result = resultActions.andReturn();
 		String contentStr = result.getResponse().getContentAsString();
