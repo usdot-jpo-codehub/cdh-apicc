@@ -1,16 +1,21 @@
+:toc: left
+:toclevels: 4
+
 == ITS CodeHub
 === Constant Contact Web API
-This REST API allows CodeHub to register users to an email distribution list.
+WebApi to interface https://www.constantcontact.com/index.jsp[Constant Contact] System and register users to an existing email list.
 
-==== Create/Register User in Constanct Contact
+This API uses https://spring.io/projects/spring-boot[Spring Boot] as base to expose the REST end point used for the registration.
+
+==== Register User in Constant Contact
 Creates or registers a user in the CodeHub distribution list of https://www.constantcontact.com/index.jsp[Constant Contact].
 
 The API requires to have a valid Constant Contact API Key and AccessToken.
 
-===== Sample Request
+===== Request Sample
 include::{snippets}/api/v1/contact/http-request.adoc[]
 
-===== Sample Response
+===== Response Sample
 include::{snippets}/api/v1/contact/http-response.adoc[]
 
 ===== cURL Sample
