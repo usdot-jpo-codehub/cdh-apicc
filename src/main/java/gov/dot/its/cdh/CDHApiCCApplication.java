@@ -8,8 +8,11 @@ import org.springframework.boot.context.properties.EnableConfigurationProperties
 @EnableConfigurationProperties(ConfigProperties.class)
 public class CDHApiCCApplication {
 
+
 	public static void main(String[] args) {
 		SpringApplication.run(CDHApiCCApplication.class, args);
+
+		System.out.println("CDH-APICC Started");
 	}
 
 }
