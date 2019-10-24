@@ -119,6 +119,6 @@ Thank you to the Department of Transportation for funding to develop this projec
 * __Short Description:__ WebAPI to interface Constant Contact API.
 * __Status:__ Beta
 * __Tags:__ CodeHub, Constant Contact, DOT, Spring Boot, Java
-* __Labor Hours:__
-* __Contact Name:__
+* __Labor Hours:__ 0
+* __Contact Name:__ Brian Brotsos
 * __Contact Phone:__
