@@ -1,3 +1,5 @@
+![Build Status](https://codebuild.us-east-1.amazonaws.com/badges?uuid=eyJlbmNyeXB0ZWREYXRhIjoiTXFOdlBneTF5OU50Und4U1RSUm13NTNSMVZFd1JpQWVuWHluaGQ4eS9aVnluUDFMRnNHeXZzK1NRNkRYQXR0K2huQ3grZ0g1ZnBOVFBiSkdQYVEzY3pzPSIsIml2UGFyYW1ldGVyU3BlYyI6InNaaS9CRG1mcWRtMjN4ZDgiLCJtYXRlcmlhbFNldFNlcmlhbCI6MX0%3D&branch=master)
+
 # ITS CodeHub Constant Contact API (cdh-apicc)
 
 WebApi to interface Constant [Contact System](https://www.constantcontact.com/index.jsp) and register users to an existing email list.
