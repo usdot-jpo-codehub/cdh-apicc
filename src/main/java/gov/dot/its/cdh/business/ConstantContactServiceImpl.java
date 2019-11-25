@@ -6,6 +6,8 @@ import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
@@ -20,39 +22,37 @@ import gov.dot.its.cdh.model.ApiMessage;
 import gov.dot.its.cdh.model.ApiResponse;
 import gov.dot.its.cdh.model.CCContactRequest;
 import gov.dot.its.cdh.model.CCContactResponse;
-import gov.dot.its.cdh.utils.CDHUtils;
-import gov.dot.its.cdh.utils.CDHUtilsImpl;
 
 @Service
 public class ConstantContactServiceImpl implements ConstantContactService {
 
+	private static final Logger logger = LoggerFactory.getLogger(ConstantContactServiceImpl.class);
+
+	private static final String MESSAGE_TEMPLATE = "%s : %s";
+
 	@Autowired
 	ConstantContactDao constantContactDao;
-
-	private CDHUtils cdhUtils;
-
-	public ConstantContactServiceImpl() {
-		this.cdhUtils = new CDHUtilsImpl();
-	}
 
 
 	@Override
 	public ApiResponse<List<Contact>> getContactsByEmail(HttpServletRequest request, String email) {
 		ApiResponse<List<Contact>> apiResponse = new ApiResponse<>();
-		
+
 		try {
-			
+
 			List<Contact> contacts = constantContactDao.getContactsByEmail(email);
 			if( contacts.isEmpty() ) {
 				apiResponse.setResponse(HttpStatus.NO_CONTENT, null, null, null, request);
+				logger.info(String.format(MESSAGE_TEMPLATE, "getContactByEmail", HttpStatus.NO_CONTENT));
 				return apiResponse;
 			} else {
 				apiResponse.setResponse(HttpStatus.OK,  contacts, null, null, request);
+				logger.info(String.format(MESSAGE_TEMPLATE, "getContactByEmail", HttpStatus.OK));
 				return apiResponse;
 			}
-				
+
 		} catch(IOException e) {
-			cdhUtils.printMessage(true, e.getMessage());
+			logger.error(e.getMessage());
 			List<ApiError> errors = new ArrayList<>();
 			errors.add(new ApiError(e.getMessage()));
 			apiResponse.setResponse(HttpStatus.INTERNAL_SERVER_ERROR, null, null, errors, request);
@@ -62,15 +62,16 @@ public class ConstantContactServiceImpl implements ConstantContactService {
 
 	@Override
 	public ApiResponse<CCContactResponse> createContact(HttpServletRequest request, CCContactRequest ccContactRequest) {
-		cdhUtils.printMessage(false, "Request: Register Contact");
+		logger.info(String.format(MESSAGE_TEMPLATE, "Request", "Register contact."));
 		ApiResponse<CCContactResponse> apiResponse = new ApiResponse<>();
 		List<ApiMessage> messages = new ArrayList<>();
 		List<ApiError> errors = new ArrayList<>();
-		
+
 		if (ccContactRequest == null || StringUtils.isEmpty(ccContactRequest.getEmail()) || StringUtils.isEmpty(ccContactRequest.getListId())) {
-			messages.add(new ApiMessage("The request body is empty or does not containt the required information."));
+			String msg = "The request body is empty or does not containt the required information.";
+			messages.add(new ApiMessage(msg));
 			apiResponse.setResponse(HttpStatus.BAD_REQUEST, null, messages, null, request);
-			cdhUtils.printMessage(false, String.format("Response: Register Contact, %s", HttpStatus.BAD_REQUEST.toString()));
+			logger.error(String.format(MESSAGE_TEMPLATE, HttpStatus.BAD_REQUEST, msg));
 			return apiResponse;
 		}
 
@@ -86,7 +87,7 @@ public class ConstantContactServiceImpl implements ConstantContactService {
 					String msg = "CC Invalid Request while creating.";
 					errors.add(new ApiError(msg));
 					apiResponse.setResponse(HttpStatus.BAD_REQUEST, null, null, errors, request);
-					cdhUtils.printMessage(true, msg);
+					logger.error(String.format(MESSAGE_TEMPLATE, HttpStatus.BAD_REQUEST, msg));
 					return apiResponse;
 				}
 				contactResponse = getContactResponse(contact.getId(), ccContactRequest.getEmail(), ccContactRequest.getListId());
@@ -102,7 +103,7 @@ public class ConstantContactServiceImpl implements ConstantContactService {
 						String msg = "CC Invalid Request while updating.";
 						errors.add(new ApiError(msg));
 						apiResponse.setResponse(HttpStatus.BAD_REQUEST, null, null, errors, request);
-						cdhUtils.printMessage(true, msg);
+						logger.error(String.format(MESSAGE_TEMPLATE, HttpStatus.BAD_REQUEST, msg));
 						return apiResponse;
 					}
 					contactResponse = getContactResponse(contact.getId(), ccContactRequest.getEmail(), ccContactRequest.getListId());
@@ -112,11 +113,11 @@ public class ConstantContactServiceImpl implements ConstantContactService {
 			}
 
 			apiResponse.setResponse(httpStatus, contactResponse, messages, null, request);
-			cdhUtils.printMessage(false, String.format("Response: Register Contact, %s", httpStatus.toString()));
+			logger.info(String.format(MESSAGE_TEMPLATE, "Resonse", "Register contact. "+httpStatus.toString()));
 			return apiResponse;
 
 		} catch(IOException e) {
-			cdhUtils.printMessage(true, e.getMessage());
+			logger.error(e.getMessage());
 			errors.add(new ApiError(e.getMessage()));
 			apiResponse.setResponse(HttpStatus.INTERNAL_SERVER_ERROR, null, null, errors, request);
 			return apiResponse;
