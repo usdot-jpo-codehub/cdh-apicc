@@ -4,7 +4,7 @@ WebApi to interface Constant [Contact System](https://www.constantcontact.com/in
 This API uses [Spring Boot](https://spring.io/projects/spring-boot) as base to expose the REST end point used for the registration.
 
 ## Usage
-Once the application is running on a configured port it is required to submit a POST request providing the email to be registered and a valid Constant Contact list id as payload of the request. 
+Once the application is running on a configured port it is required to submit a POST request providing the email to be registered and a valid Constant Contact list id as payload of the request.  
 
 ### Request
 
