@@ -115,7 +115,7 @@ Distributed under XYZ license. See *LICENSE* for more information
 5. Create a new Pull Request
 
 ## Known Bugs
-*
+**
 
 ## Credits and Acknowledgment
 Thank you to the Department of Transportation for funding to develop this project.
