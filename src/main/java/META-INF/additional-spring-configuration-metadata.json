@@ -1,0 +1,12 @@
+{"properties": [
+  {
+    "name": "apicc.api.origins",
+    "type": "java.lang.String",
+    "description": "A description for 'apicc.api.origins'"
+  },
+  {
+    "name": "apicc.api.methods",
+    "type": "java.lang.String",
+    "description": "A description for 'apicc.api.methods'"
+  }
+]}
