@@ -1,3 +1,5 @@
+![Build Status](https://codebuild.us-east-1.amazonaws.com/badges?uuid=eyJlbmNyeXB0ZWREYXRhIjoiTXFOdlBneTF5OU50Und4U1RSUm13NTNSMVZFd1JpQWVuWHluaGQ4eS9aVnluUDFMRnNHeXZzK1NRNkRYQXR0K2huQ3grZ0g1ZnBOVFBiSkdQYVEzY3pzPSIsIml2UGFyYW1ldGVyU3BlYyI6InNaaS9CRG1mcWRtMjN4ZDgiLCJtYXRlcmlhbFNldFNlcmlhbCI6MX0%3D&branch=master)
+
 # ITS CodeHub Constant Contact API (cdh-apicc)
 
 WebApi to interface Constant [Contact System](https://www.constantcontact.com/index.jsp) and register users to an existing email list.
@@ -125,6 +127,6 @@ Thank you to the Department of Transportation for funding to develop this projec
 * __Short Description:__ WebAPI to interface Constant Contact API.
 * __Status:__ Beta
 * __Tags:__ CodeHub, Constant Contact, DOT, Spring Boot, Java
-* __Labor Hours:__
-* __Contact Name:__
+* __Labor Hours:__ 0
+* __Contact Name:__ Brian Brotsos
 * __Contact Phone:__
